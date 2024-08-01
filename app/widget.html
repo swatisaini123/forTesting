@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+  <link rel="stylesheet" href="style.css"> 
+  <meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="https://www.swigartlawgroup.com/wp-content/themes/Swigart%20Law%20Group/images/logo-header-2.png"
+        alt="Swigart Law Group Logo" style="filter: grayscale(100%);">
+    </div>
+    <div class="tabs">
+      <button class="active" onclick="showTab('allCases')">All Cases</button>
+      <button onclick="showTab('faqs')">FAQs</button>
+    </div>
+    <div class="contact-info">
+      <div class="phone" style="font-size: 22px;cursor: pointer;"><i class="fas fa-phone"></i> 866.219.3343</div>
+      <div style="margin-top: 27%;">
+        <a href="https://www.swigartlawgroup.com/#" class="contact-button" style="font-size: 20px;">>> Contact Us</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="allCases" class="tab-content active">
+    <div style="width:97%">
+      <h2 style="font-size: 2.6rem;color: #000;">All Cases</h2>
+    </div>
+      <div class="spinner" id="spinner">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="container" id="cardsContainer"></div>
+  </div>
+
+  <div class="faqcontainer tab-content" id="faqs" >
+  
+    <div class="faq" >
+      <div class="Allfaq-left">
+        <h1 style="font-size: 63.96px;padding-top: 74%;">Have <br/> Questions?</h1>
+        <div class="faq-info">
+            <div class="faq-icons" style="display: flex;">
+                <div class="circle1"></div>
+                <div class="circle2" ></div>
+                <div class="circle3"></div>
+            </div>
+            <p class="subTitlePara">Our attorneys are available to answer your questions.</p>
+            <a href="#" class="view-all" id="viewAll" style="font-size: 24px;">View all FAQs</a>
+        </div>
+    </div>
+    <div class="Allfaq-right">
+        <div class="faq-content">
+          <div class="faq-question">How do I file a claim?<span class="faq-toggle">+</span></div>
+          <p class="faq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Click on one of the open cases to see if you qualify. Answer a few simple questions to start your claim. Sign the agreement to proceed further. Then register for the Client Portal to complete the steps for your claim.</p>
+        </div>
+        
+        <div class="faq-content">
+          <div class="faq-question">Am I signing up for a class action?<span class="faq-toggle">+</span></div>
+          <p class="faq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">No, this is not a class action lawsuit. Your individual arbitration claim will be decided on its own facts, which is why we ask for more information than is normally required when signing up for a class action settlement.</p>
+        </div>
+        <div class="faq-content">
+          <div class="faq-question">How do your fees work?<span class="faq-toggle">+</span></div>
+          <p class="faq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Our fees will be a percentage of the settlement or recovery we obtain for you. That amount will depend on the rules in the state you live in. We only receive a fee if you win, and you will never owe us any money.</p>
+        </div>
+        <div class="faq-content">
+          <div class="faq-question">Is arbitration confidential?<span class="faq-toggle">+</span></div>
+          <p class="faq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Yes, arbitration is a confidential, private process.</p>
+        </div>
+        <div class="faq-content">
+          <div class="faq-question">Why arbitration?<span class="faq-toggle">+</span></div>
+          <p class="faq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Many consumer agreements or services have mandatory arbitration provisions in their agreements and/or terms of use, along with class action waivers. You probably signed these agreements, such as with banks and credit card companies, even if you’ve never seen them or do not remember. They are also found in many online click-through agreements, such as travel, shopping, gaming, or entertainment sites. These clauses not only require you to arbitrate your claim, but to do so individually.</p>
+        </div>
+        <div class="faq-content">
+          <div class="faq-question">Do I have to appear in person for arbitration?<span class="faq-toggle">+</span></div>
+          <p class="faq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Most of the time, arbitration can be conducted either by telephone or through documents provided by you and the company.</p>
+        </div>
+       </div>
+    </div>
+    <div class="form-container">
+      <div style="
+      font-size: 24px;
+      color: green;display:none
+  " id="Message">Question Submitted Successfully</div>
+      <h2>SUBMIT YOUR <span class="highlight">QUESTIONS</span></h2>
+      <form  id="emailForm">
+          <div class="form-group">
+              <input type="text" id="name" name="name" placeholder="Name*" required>
+              <input type="email" id="email" name="email" placeholder="Email*" required>
+          </div>
+          <div class="form-group">
+              <input type="text" id="subject" name="subject" placeholder="Subject*" required>
+          </div>
+          <div class="form-group">
+              <textarea id="question" name="question" rows="5" placeholder="Ask your question here*" required></textarea>
+          </div>
+          <button type="submit" class="submit-button" >SUBMIT</button>
+      </form>
+  </div>
+  </div>
+  <div class="Allfaq-container" id="allFAQs" style="display: none;padding:4%">
+    <div class="Allfaq-left">
+        <h1>Frequently Asked Questions</h1>
+        <span class="subTittle dark">TOPICS</span>
+        <a href="#" class="topic active" data-section="consumer-rights">Consumer Rights
+          <span></span>
+        </a>
+        <a href="#" class="topic" data-section="legal-documents">Legal Documents
+          <span></span>
+        </a>
+        <a href="#" class="topic" data-section="general-faq">General FAQ
+          <span></span>
+        </a>
+    </div>
+    <div class="Allfaq-right" id="faqContent">
+        <div id="consumer-rights" class="Allfaq-category">
+            <h2>Consumer Rights</h2>
+            <div class="Allfaq-item">
+                <div class="Allfaq-question">How do I start arbitration?<span class="Allfaq-toggle">+</span></div>
+                <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Arbitration begins when one party files a form with the selected arbitration organization. However, most companies include a notice requirement in their arbitration clause where the customer agrees to notify the company of his/her intent to seek arbitration. The notice typically requests personal information from the customer, such as date of birth, full name, and address, along with a brief description of the customer’s complaint and the type of relief you would like from the company. If your arbitration clause requires you to provide notice, and you elect to have Labaton Keller Sucharow LLP represent you, then we will work with you to complete this form and our firm will handle all communication and negotiations with the company.</div>
+            </div>
+            <div class="Allfaq-item">
+                <div class="Allfaq-question">Can I continue to use the product while my arbitration is pending?<span class="Allfaq-toggle">+</span></div>
+                <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">You can continue to use the product while your arbitration claim is pending. Do not discuss your claim with anyone who is affiliated. Please notify us immediately if you receive any communications from the company about your claims or the arbitration.</div>
+            </div>
+            <!-- More FAQ items -->
+        </div>
+        <div id="legal-documents" class="Allfaq-category" style="display: none;">
+            <h2>Legal Documents</h2>
+            <div class="Allfaq-item">
+                <div class="Allfaq-question">What documents are required for arbitration?<span class="Allfaq-toggle">+</span></div>
+                <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">You will need to provide the following documents...</div>
+            </div>
+            <div class="Allfaq-item">
+                <div class="Allfaq-question">How do I obtain legal documents?<span class="Allfaq-toggle">+</span></div>
+                <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">You can obtain legal documents by...</div>
+            </div>
+            <!-- More FAQ items -->
+        </div>
+        <div id="general-faq" class="Allfaq-category" style="display: none;">
+            <h2>General FAQ</h2>
+            <div class="Allfaq-item">
+                <div class="Allfaq-question">How do I file a claim?<span class="Allfaq-toggle">+</span></div>
+                <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Click on one of the open cases to see if you qualify. Answer a few simple questions to start your claim. Sign the agreement to proceed further. Then register for the Client Portal to complete the steps for your claim.</div>
+            </div>
+            <div class="Allfaq-item">
+                <div class="Allfaq-question">Am I signing up for a class action?<span class="Allfaq-toggle">+</span></div>
+                <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">No, this is not a class action lawsuit. Your individual arbitration claim will be decided on its own facts, which is why we ask for more information than is normally required when signing up for a class action settlement.</div>
+            </div>
+            <div class="Allfaq-item">
+              <div class="Allfaq-question">How do your fees work?<span class="Allfaq-toggle">+</span></div>
+              <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Yes, arbitration is a confidential, private process.</div>
+          </div>
+          <div class="Allfaq-item">
+              <div class="Allfaq-question">Is arbitration confidential?<span class="Allfaq-toggle">+</span></div>
+              <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">No, this is not a class action lawsuit. Your individual arbitration claim will be decided on its own facts, which is why we ask for more information than is normally required when signing up for a class action settlement.</div>
+          </div>
+          <div class="Allfaq-item">
+            <div class="Allfaq-question">Why arbitration?<span class="Allfaq-toggle">+</span></div>
+            <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Many consumer agreements or services have mandatory arbitration provisions in their agreements and/or terms of use, along with class action waivers. You probably signed these agreements, such as with banks and credit card companies, even if you’ve never seen them or do not remember. They are also found in many online click-through agreements, such as travel, shopping, gaming, or entertainment sites. These clauses not only require you to arbitrate your claim, but to do so individually.</div>
+        </div>
+        <div class="Allfaq-item">
+            <div class="Allfaq-question">Do I have to appear in person for arbitration?<span class="Allfaq-toggle">+</span></div>
+            <div class="Allfaq-answer" style="color: #485570;font-size: 16px;line-height: 24px; padding: 15px 0 52px;">Most of the time, arbitration can be conducted either by telephone or through documents provided by you and the company.</div>
+        </div>
+            <!-- More FAQ items -->
+        </div>
+    </div>
+</div>
+  <footer>
+    <div class="Footercontainer">
+      <div class="footer">
+        <div class="address">
+          <div class="textwidget">
+            <p>2221 CAMINO DEL RIO S.<br>
+              SUITE 308, SAN DIEGO, CA 92108</p>
+            <p><a
+                href="https://www.google.com/maps/place/2221+Camino+del+Rio+S+STE+308,+San+Diego,+CA+92108,+USA/@32.7665949,-117.1434727,17z/data=!3m1!4b1!4m5!3m4!1s0x80d9551b81b82bbd:0xe0b623725499b16c!8m2!3d32.7665949!4d-117.141284"
+                target="_blank" rel="noopener">GET DIRECTIONS</a></p>
+            <p>&nbsp;</p>
+            <p>1987 North Marshall Avenue,<br>
+              Suite #102,El Cajon, CA 92020</p>
+            <p><a
+                href="https://www.google.com/maps/place/1987+N+Marshall+Ave+%23102,+El+Cajon,+CA+92020,+USA/@32.8250099,-116.9763854,17z/data=!3m1!4b1!4m5!3m4!1s0x80d95819e62ac245:0xc812c07aec48b0e3!8m2!3d32.8250099!4d-116.9741967"
+                target="_blank" rel="noopener">GET DIRECTIONS</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="address">
+          <div class="textwidget">
+            <p>1700 Seventh Avenue,<br>
+              Suite #2100, Seattle, WA 98101</p>
+            <p><a
+                href="https://www.google.com/maps/place/1700+7th+Ave+%232100,+Seattle,+WA+98101/@47.6141942,-122.3380006,17z/data=!3m1!4b1!4m6!3m5!1s0x5490154add39cf31:0x16b62172c027d951!8m2!3d47.6141906!4d-122.3354257!16s%2Fg%2F11q_69w1z2?entry=ttu" 
+                target="_blank">GET
+                DIRECTIONS</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="web-connect">
+          <div class="textwidget">
+            <p><img loading="lazy" decoding="async" class="alignnone size-full wp-image-1208"
+                src="https://www.swigartlawgroup.com/wp-content/uploads/2021/02/logo-footer-2-1.jpg" alt="" width="300"
+                height="85"></p>
+            <div class="socialmedia-footer"><a href="https://www.facebook.com/Swigart-Law-Group-105786330799288/"
+                target="_blank" rel="noopener"><img decoding="async"
+                  src="https://www.swigartlawgroup.com/wp-content/uploads/2019/08/facebook-icon.png"
+                  alt="facebook"></a><a href="https://www.linkedin.com/in/joshua-swigart-55a891190/" target="_blank"
+                rel="noopener"><img decoding="async"
+                  src="https://www.swigartlawgroup.com/wp-content/uploads/2019/08/linkedin-icon.png" alt="linkedin"></a>
+            </div>
+          </div>
+          <div class="textwidget">
+            <ul>
+              <li><a href="https://www.swigartlawgroup.com/privacy-policy/">Privacy Policy</a></li>
+              <li><a href="https://www.swigartlawgroup.com/disclaimer/">Disclaimer</a></li>
+              <li><a href="https://www.swigartlawgroup.com/accessibility-statement/">Accessibility Statement</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="textwidget">
+          <ul class="company-info">
+            <li><a href="mailto:josh@swigartlawgroup.com">josh@swigartlawgroup.com</a></li>
+            <li>PHONE: <a href="tel:8662193343">866-219-3343</a></li>
+            <li>FAX: 866-219-8344</li>
+            <li>Direct Call to Josh: <a href="tel:6197286348">619-728-6348</a></li>
+          </ul>
+        </div>
+
+        <p></p>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="textwidget">
+        <p>©2023 Swigart Law Group APC.</p>
+        <p class="footerlink"><a href="https://www.swigartlawgroup.com/privacy-policy/">Privacy Policy</a>|<a
+            href="https://www.swigartlawgroup.com/disclaimer/">Disclaimer</a>|<a
+            href="https://www.swigartlawgroup.com/accessibility-statement/">Accessibility Statement</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    console.log('Location::'+window.location.hostname);
+    const viewAllLink = document.getElementById('viewAll');
+            const initialFAQs = document.getElementById('faqs');
+            const allFAQs = document.getElementById('allFAQs');
+            const topics = document.querySelectorAll('.topic');
+            const faqContent = document.getElementById('faqContent');
+            viewAllLink.addEventListener('click', (event) => {
+              event.preventDefault();
+              initialFAQs.style.display = 'none';
+              allFAQs.style.display = 'inline-flex';
+          });
+    function showSection(sectionId) {
+      document.querySelectorAll('.Allfaq-category').forEach(category => {
+          category.style.display = category.id === sectionId ? 'block' : 'none';
+      });
+      topics.forEach(topic => {
+        topic.addEventListener('click', (event) => {
+            event.preventDefault();
+            const sectionId = topic.getAttribute('data-section');
+            showSection(sectionId);
+        });
+    });
+
+      topics.forEach(topic => {
+          if (topic.getAttribute('data-section') === sectionId) {
+              topic.classList.add('active');
+          } else {
+              topic.classList.remove('active');
+          }
+      });
+  }
+  showSection('consumer-rights');
+  document.querySelectorAll('.Allfaq-question').forEach(item => {
+    item.addEventListener('click', () => {
+        // Get the parent element of the clicked FAQ question
+        const parent = item.parentElement;
+        const answer = parent.querySelector('.Allfaq-answer');
+        const toggle = item.querySelector('.Allfaq-toggle');
+
+        // Check if the clicked item is currently active
+        const isActive = parent.classList.contains('active');
+
+        // Remove 'active' class from all FAQ items and hide their answers
+        document.querySelectorAll('.Allfaq-item').forEach(eachitem => {
+            if (eachitem !== parent) {
+                eachitem.classList.remove('active');
+                eachitem.querySelector('.Allfaq-answer').style.display = 'none';
+                eachitem.querySelector('.Allfaq-toggle').textContent = '+';
+            }
+        });
+
+        // Toggle the 'active' class on the clicked FAQ item based on its current state
+        if (!isActive) {
+            parent.classList.add('active');
+            answer.style.display = 'block';
+            toggle.textContent = '-';
+        } else {
+            parent.classList.remove('active');
+            answer.style.display = 'none';
+            toggle.textContent = '+';
+        }
+
+        // For debugging: log the current class list of the parent element
+        console.log('Current class list of parent:', parent.classList);
+    });
+});
+
+document.querySelectorAll('.faq-question').forEach(fqitem => {
+  fqitem.addEventListener('click', () => {
+    // Get the parent element of the clicked FAQ item
+    const faqparent = fqitem.parentElement;
+    const faqanswer = faqparent.querySelector('.faq-answer');
+    const faqtoggle = fqitem.querySelector('.faq-toggle');
+
+    // Check if the clicked item is currently active
+    const isActive = faqparent.classList.contains('faqactive');
+
+    // Remove 'faqactive' class from all FAQ items and hide their answers
+    document.querySelectorAll('.faq-content').forEach(eachItem => {
+      eachItem.classList.remove('faqactive');
+      eachItem.querySelector('.faq-answer').style.display = 'none';
+      eachItem.querySelector('.faq-toggle').textContent = '+';
+    });
+
+    // Toggle the 'faqactive' class on the clicked FAQ item based on its current state
+    if (!isActive) {
+      faqparent.classList.add('faqactive');
+      faqanswer.style.display = 'block';
+      faqtoggle.textContent = '-';
+    } else {
+      faqparent.classList.remove('faqactive');
+      faqanswer.style.display = 'none';
+      faqtoggle.textContent = '+';
+    }
+
+    // For debugging: log the current class list of the parent element
+    console.log('Current class list of faqparent:', faqparent.classList);
+  });
+});
+
+
+
+
+    function showTab(tabId) {
+      // Hide all tab contents
+      var tabContents = document.getElementsByClassName('tab-content');
+      for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+      }
+
+      // Remove active class from all tab buttons
+      var tabButtons = document.getElementsByClassName('tabs')[0].getElementsByTagName('button');
+      for (var i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove('active');
+      }
+
+      // Show the selected tab content
+      document.getElementById(tabId).classList.add('active');
+
+      // Add active class to the selected tab button
+      event.currentTarget.classList.add('active');
+    }
+
+    const container = document.getElementById("cardsContainer");
+
+    $(document).ready(function () {
+      document.getElementById('spinner').style.display = 'flex';
+      $.ajax({
+        url: 'http://mycases-env-1.eba-p53cpwsg.us-east-1.elasticbeanstalk.com/fetch-zoho-details',
+        method: 'GET',
+        success: function (response) {
+          displayAllFormData(response.data);
+        },
+        error: function (xhr, status, error) {
+          console.error('Error:', error);
+          console.error('Status:', status);
+          console.error('XHR:', xhr);
+          $('#result').html('Error: ' + error);
+        }
+      });
+    });
+
+    function displayAllFormData(allForms) {
+      container.innerHTML = ""; // Clear the container before appending items
+      allForms.forEach((caseData) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+        <h2>${caseData.Name}</h2>
+        <a href="${caseData.Running_Campaign_URL}" class="btn" target="_blank">View case</a>
+      `;
+
+        container.appendChild(card);
+      });
+      document.getElementById('spinner').style.display = 'none';
+    }
+
+    document.querySelectorAll('.faq-question').forEach(item => {
+      item.addEventListener('click', () => {
+        const parent = item.parentElement;
+        parent.classList.toggle('active');
+      });
+    });
+    
+
+    document.getElementById('emailForm').addEventListener('submit', function(event) {
+    emailjs.init("DiNmCM3zYmsJfFYmR");
+    var form = document.getElementById('emailForm');
+      var formData = new FormData(form);
+    event.preventDefault()
+      const emailParams = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        subject:document.getElementById('subject').value,
+        message: document.getElementById('question').value,
+        Ownername: "Swati"  
+      };
+      console.log(emailParams);
+      console.log(formData);
+
+      emailjs.send('service_v0d46ei', 'template_w7fk9ba', emailParams)
+        .then(response => {
+          document.getElementById('Message').style.display = "block";
+          form.reset();
+        })
+        .catch(error => {
+          console.error('Error sending email:', error);
+        });
+    });
+  </script>
+</body>
+
+</html>
