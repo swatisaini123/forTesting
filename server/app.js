@@ -87,13 +87,11 @@ expressApp.get('/fetch-zoho-details', async (req, res) => {
 expressApp.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-https.createServer(options, expressApp).listen(port, '0.0.0.0', function () {
- 
-  console.log(chalk.green('Zet running at ht' + 'tps://0.0.0.0:' + port));
+https.createServer(options, expressApp).listen(port, function () {
+  console.log(chalk.green('Zet running at ht' + 'tps://127.0.0.1:' + port));
   console.log(chalk.bold.cyan("Note: Please enable the host (https://127.0.0.1:"+port+") in a new tab and authorize the connection by clicking Advanced->Proceed to 127.0.0.1 (unsafe)."));
 }).on('error', function (err) {
   if (err.code === 'EADDRINUSE') {
-     console.log('Zet running at ht' + 'tps://0.0.0.0:' + port);
     console.log(chalk.bold.red(port + " port is already in use"));
   }
 });
