@@ -16,10 +16,10 @@
   <div class="header">
     <div class="logo">
       <img src="https://www.swigartlawgroup.com/wp-content/themes/Swigart%20Law%20Group/images/logo-header-2.png"
-        alt="Swigart Law Group Logo" style="filter: grayscale(100%);">
+        alt="Swigart Law Group Logo">
     </div>
     <div class="tabs">
-      <button class="active" onclick="showTab('allCases')">All Cases</button>
+      <button class="active" onclick="showTab('allCases')">Explore Cases</button>
       <button onclick="showTab('faqs')">FAQs</button>
     </div>
     <div class="contact-info">
@@ -32,7 +32,7 @@
 
   <div id="allCases" class="tab-content active">
     <div style="width:97%">
-      <h2 style="font-size: 2.6rem;color: #000;">All Cases</h2>
+      <h2 style="font-size: 2.6rem;color: #000;">Explore Cases</h2>
     </div>
       <div class="spinner" id="spinner">
       <div class="dot"></div>
@@ -41,6 +41,47 @@
       <div class="dot"></div>
     </div>
     <div class="container" id="cardsContainer"></div>
+    <div class="AboutUs" style="text-align: center;">
+      <hr/>
+    <h1>About Swigart Law Group</h1>
+    <p style="font-size: 18px;">Swigart Law is a consumer protection and privacy law firm that helps people who have been injured by online companies, banks, employers, drug and medical companies, or large corporations.</p>
+    <p style="font-size: 18px;">We pride ourselves on our ability to deliver a seamless customer experience and competent representation for consumers nationwide.</p>
+  </div>
+  <hr/>
+    <section class="testimonials">
+      <h1>What Our Clients Say</h1>
+      <div class="testimonial-slider">
+          <div class="testimonial-container" id="testimonial-container">
+              <!-- Duplicate of the last testimonial for seamless loop -->
+              <div class="testimonial">
+                  <p>I ended up with a very large settlement. I was shocked and grateful - not only for the money, but also for knowing Swigart Law fought and WON for consumers and our privacy, which is something I care greatly about. Great lawyers with a great mission!</p>
+                  <p class="client-name">Swigart Law Client</p>
+              </div>
+              <!-- Original testimonials -->
+              <div class="testimonial">
+                  <p>They actually got me a decent settlement from a big class action sort of suit. I’m totally surprised!! They were super helpful as well when there were some technical issues with papers. Lawyers who are nice and get results, who would’ve thought?!</p>
+                  <p class="client-name">Swigart Law Client</p>
+              </div>
+              <div class="testimonial">
+                  <p>I saw an ad regarding the class action suit and while I was initially skeptical, I contacted their office and was met with much reassurance professionalism. The whole process was super easy and I came away with a settlement check in the mail several months later.</p>
+                  <p class="client-name">Swigart Law Client</p>
+              </div>
+              <div class="testimonial">
+                  <p>The Swigart Law Group is the epitome of professional and effective representation for all sorts of needs. They offered representation for me in a class action suit and they made the whole process feel so simple and thankfully, not stressful at all.</p>
+                  <p class="client-name">Swigart Law Client</p>
+              </div>
+              <div class="testimonial">
+                  <p>I ended up with a very large settlement. I was shocked and grateful - not only for the money, but also for knowing Swigart Law fought and WON for consumers and our privacy, which is something I care greatly about. Great lawyers with a great mission!</p>
+                  <p class="client-name">Swigart Law Client</p>
+              </div>
+              <!-- Duplicate of the first testimonial for seamless loop -->
+              <div class="testimonial">
+                  <p>They actually got me a decent settlement from a big class action sort of suit. I’m totally surprised!! They were super helpful as well when there were some technical issues with papers. Lawyers who are nice and get results, who would’ve thought?!</p>
+                  <p class="client-name">Swigart Law Client</p>
+              </div>
+          </div>
+      </div>
+  </section>
   </div>
 
   <div class="faqcontainer tab-content" id="faqs" >
@@ -108,6 +149,8 @@
   </div>
   </div>
   <div class="Allfaq-container" id="allFAQs" style="display: none;padding:4%">
+   
+    <a onclick="OpenfaqPage()"><img src="backIcon.png" style="height: 27px; cursor:pointer;"></a></body></html>
     <div class="Allfaq-left">
         <h1>Frequently Asked Questions</h1>
         <span class="subTittle dark">TOPICS</span>
@@ -176,6 +219,7 @@
         </div>
     </div>
 </div>
+
   <footer>
     <div class="Footercontainer">
       <div class="footer">
@@ -355,9 +399,7 @@ document.querySelectorAll('.faq-question').forEach(fqitem => {
 });
 
 
-
-
-    function showTab(tabId) {
+    function showTab(tabId) { 
       // Hide all tab contents
       var tabContents = document.getElementsByClassName('tab-content');
       for (var i = 0; i < tabContents.length; i++) {
@@ -375,6 +417,14 @@ document.querySelectorAll('.faq-question').forEach(fqitem => {
 
       // Add active class to the selected tab button
       event.currentTarget.classList.add('active');
+      if(tabId == 'allCases'){
+        document.getElementById("allFAQs").style.display = "none";
+        document.getElementById("faqs").style.display = "none";
+      }
+      if(tabId == 'faqs'){
+        document.getElementById("allFAQs").style.display = "none";
+        document.getElementById("faqs").style.display = "block";
+      }
     }
 
     const container = document.getElementById("cardsContainer");
@@ -444,6 +494,36 @@ document.querySelectorAll('.faq-question').forEach(fqitem => {
           console.error('Error sending email:', error);
         });
     });
+    document.addEventListener("DOMContentLoaded", function() {
+      const container = document.getElementById('testimonial-container');
+      const testimonials = document.querySelectorAll('.testimonial');
+      const totalTestimonials = testimonials.length;
+      let index = 0; // Start from the first testimonial
+      const cardWidthPercentage = 5; // Updated for 10% width
+      const slideInterval = 3000; // Time between slides in milliseconds
+
+      function showNextTestimonial() {
+          index++;
+          if (index >= totalTestimonials) {
+              index = 0; // Restart from the beginning
+              container.style.transition = 'none'; // Disable transition
+              container.style.transform = 'translateX(0)'; // Reset position
+              setTimeout(() => {
+                  container.style.transition = 'transform 1s ease'; // Re-enable transition
+                  container.style.transform = `translateX(${-index * cardWidthPercentage}%)`;
+              }, 50);
+          } else {
+              container.style.transform = `translateX(${-index * cardWidthPercentage}%)`;
+          }
+      }
+
+      setInterval(showNextTestimonial, slideInterval);
+  });
+  function OpenfaqPage(){
+    document.getElementById("faqs").style.display = "block";
+    document.getElementById("allFAQs").style.display = "none";
+
+  }
   </script>
 </body>
 
