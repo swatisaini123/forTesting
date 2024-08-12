@@ -382,7 +382,7 @@ document.querySelectorAll('.faq-question').forEach(fqitem => {
     $(document).ready(function () {
       document.getElementById('spinner').style.display = 'flex';
       $.ajax({
-        url: 'http://mycases-env-1.eba-p53cpwsg.us-east-1.elasticbeanstalk.com/fetch-zoho-details',
+        url: 'http://localhost:50000/fetch-zoho-details',
         method: 'GET',
         success: function (response) {
           displayAllFormData(response.data);
